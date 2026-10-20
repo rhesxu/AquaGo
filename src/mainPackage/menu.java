@@ -5,11 +5,12 @@ import java.awt.event.*;
 
 public class menu extends JFrame implements ActionListener {
     
-    //VARIABLES
-        //NUMBERS
-        int refillq = 0;
-        int returnq = 0;
+    //OBJECTS
+        Data_and_Functions func = new Data_and_Functions ();
+        double missc;
+        
     //SWING COMPONENTS
+        
         //Texts
         JLabel mess1 = new JLabel ("Order Details");
         JLabel mess2 = new JLabel ("Full Name");
@@ -20,14 +21,24 @@ public class menu extends JFrame implements ActionListener {
         JLabel mess7 = new JLabel ("Estimated Price");
         JLabel mess8 = new JLabel ("₱25 per Refill");
         JLabel mess9 = new JLabel ("₱100 per Missing Containers");
+        JLabel mess10 = new JLabel ("Fresh Water. Easy Transactions.");
+        JLabel mess11 = new JLabel ("Order with Ease.");
+        JLabel warn1 = new JLabel ("*This field can't be empty");
+        JLabel warn2 = new JLabel ("*This field can't be empty");
+        JLabel warn3 = new JLabel ("*Please select a proper order");
+        JLabel pesosign = new JLabel("₱");
+        
         
         
         //Images
-        ImageIcon logoi = new ImageIcon ("C:/AquaGo/textlogo.png");
+        ImageIcon logoi = new ImageIcon ("C:/AquaGo/logo.png");
         ImageIcon bgi = new ImageIcon ("C:/AquaGo/bg.png");
         ImageIcon paneli = new ImageIcon ("C:/AquaGo/panel.png");
         ImageIcon icon = new ImageIcon ("C:/AquaGo/icon.png");
         ImageIcon box2 = new ImageIcon ("C:/AquaGo/box2.png");
+        ImageIcon cleari = new ImageIcon ("C:/AquaGo/clearb.png");
+        ImageIcon proceedi = new ImageIcon ("C:/AquaGo/proceedb.png");
+        ImageIcon backi = new ImageIcon ("C:/AquaGo/backb.png");
         
         
         //Shapes
@@ -44,17 +55,23 @@ public class menu extends JFrame implements ActionListener {
         JTextField tfname = new JTextField("  ");
         JTextField tfno = new JTextField("  ");
         JTextField tfadd = new JTextField("  ");
-        JTextField tfrefill = new JTextField("0");
-        JTextField tfreturn = new JTextField("0");
-        JTextField est = new JTextField("₱00.00");
+        public static JTextField tfrefill = new JTextField("0");
+        public static JTextField tfreturn = new JTextField("0");
+        public static JTextField tfest = new JTextField("00.0");
         
+        //IMAGE IMPORT
+        JLabel logo = new JLabel(logoi);
+
         //BUTTONS
         JButton rbplus = new JButton("+");
         JButton rbminus = new JButton("-");
         JButton bplus = new JButton("+");
         JButton bminus = new JButton("-");
+        JButton clear = new JButton(cleari);
+        JButton proceed = new JButton(proceedi);
+        JButton back = new JButton(backi);
         
-        
+              
     public menu(){
         //Frame setup
         super("AquaGo");
@@ -95,6 +112,7 @@ public class menu extends JFrame implements ActionListener {
             tfrefill.setFont(new Font("Arial", Font.BOLD, 25));
             tfrefill.setForeground(Color.decode("#004170"));
             
+            //TF returned
             this.add(tfreturn);
             tfreturn.setBounds(85, 665, 400, 80);
             tfreturn.setBackground(Color.decode("#EAF4FC"));
@@ -104,6 +122,36 @@ public class menu extends JFrame implements ActionListener {
             tfreturn.setFont(new Font("Arial", Font.BOLD, 25));
             tfreturn.setForeground(Color.decode("#004170"));
             
+            //TF estimated
+            this.add(tfest);
+            tfest.setBounds(730, 560, 300, 100);
+            tfest.setBackground(Color.decode("#F0F7FD"));
+            tfest.setBorder(null);
+            tfest.setEditable(false);
+            tfest.setOpaque(false);
+            tfest.setFont(new Font("Arial", Font.BOLD, 70));
+            tfest.setForeground(Color.decode("#004170"));
+        
+            
+            
+        //WARNING NOTICED
+            //Warning 1
+            this.add(warn1);
+            warn1.setBounds(910,230,200,100);
+            warn1.setFont(new Font("Arial",Font.ITALIC, 15));
+            warn1.setForeground(Color.WHITE);
+            
+            //Warning 2
+            this.add(warn2);
+            warn2.setBounds(910,320,200,100);
+            warn2.setFont(new Font("Arial",Font.ITALIC, 15));
+            warn2.setForeground(Color.WHITE);
+            
+            //Warning 3
+            this.add(warn3);
+            warn3.setBounds(380,475,300,100);
+            warn3.setFont(new Font("Arial",Font.ITALIC, 15));
+            warn3.setForeground(Color.WHITE);
             
         //TEXTS
             //"Order details"
@@ -142,10 +190,39 @@ public class menu extends JFrame implements ActionListener {
             mess6.setBounds(87, 608, 260, 80);
             mess6.setForeground(Color.decode("#174678"));
             
-            //"Price per refill0"
+            //"Est. Price"
+            this.add(mess7);
+            mess7.setBounds(660, 500, 260, 80);
+            mess7.setForeground(Color.decode("#174678"));
+            mess7.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 20));
+            
+            //"Peso sign"
+            this.add(pesosign);
+            pesosign.setBounds(660, 570, 260, 80);
+            pesosign.setForeground(Color.decode("#174678"));
+            pesosign.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 70));
+            
+            //"Price per refill"
             this.add(mess8);
-            mess8.setBounds(87, 580, 260, 80);
-            mess6.setForeground(Color.decode("#174678"));
+            mess8.setBounds(660, 655, 260, 80);
+            mess8.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 17));
+            mess8.setForeground(Color.decode("#81A9CB"));
+            
+            //"Price per missing containers"
+            this.add(mess9);
+            mess9.setBounds(660, 680, 280, 80);
+            mess9.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 17));
+            mess9.setForeground(Color.decode("#81A9CB"));
+            
+            //"Taline"
+            this.add(mess10);
+            mess10.setBounds(1210,370,300,100);
+            mess10.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 17));
+            mess10.setForeground(Color.decode("#004170"));
+            this.add(mess11);
+            mess11.setBounds(1270,400,300,100);
+            mess11.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 17));
+            mess11.setForeground(Color.decode("#3095DE"));
             
         //BUTTONS
         
@@ -186,6 +263,22 @@ public class menu extends JFrame implements ActionListener {
                 bminus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
                 bminus.addActionListener(this);
                 bminus.setForeground(Color.white);
+                
+            //CLEARING
+                this.add(clear);
+                clear.setBounds(1160,600,358,70);
+                clear.setOpaque(false);
+                clear.setBorder(null);
+                clear.setFocusPainted(false);
+                clear.addActionListener(this);
+
+            //PROCEED
+                this.add(proceed);
+                proceed.setBounds(1160,680,358,93);
+                proceed.setBackground(Color.decode("#3096DE"));
+                proceed.setBorder(null);
+                proceed.addActionListener(this);
+                
             
         //SHAPE
             //Line 1
@@ -206,7 +299,7 @@ public class menu extends JFrame implements ActionListener {
             //Line 4
             this.add(line4);
             line4.setBackground(Color.decode("#D5E7F7"));
-            line4.setBounds(660, 700, 380, 3);
+            line4.setBounds(660, 670, 380, 3);
             
             //Box 1
             
@@ -220,13 +313,17 @@ public class menu extends JFrame implements ActionListener {
             panel.setIcon(paneli);
             panel.setBounds(30,50,1150,750);
             
-        //BACKGROUND
+        //IMAGES
+            //logo
+            this.add(logo);
+            logo.setBounds(1140,50,400,400);
+            
             //bg
             this.add(bg);
             bg.setIcon(bgi);
             bg.setBounds(0, 0, 1920, 1080);
             
-            //logo
+            
             
     }
     
@@ -234,42 +331,83 @@ public class menu extends JFrame implements ActionListener {
         new menu();
     }
 
+    //BUTTON FUNCTIONS
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        
             //QUANTITY
                 //Refilled
                     //plus
                     if (e.getSource() == rbplus){
-                        if (refillq >= 20){
-                            return;
-                        }
-                        refillq++;
-                        tfrefill.setText(String.valueOf(refillq));
+                        if (func.getRefillq() < 20) {
+                        func.setRefillq(func.getRefillq() + 1);
+                        func.setReturnq(func.getReturnq() + 1);
+                            }
+                        func.updateSummary();
                     }
                     //minus
                     if (e.getSource() == rbminus){
-                        if (refillq == 0){
+                        if (func.getRefillq() > 0) {
+                        func.setRefillq(func.getRefillq() - 1);
+                        func.setReturnq(func.getReturnq() - 1);
+                            }
+                        func.updateSummary();
+                        }
+                         
+                //Returned
+                    // Plus
+                    if (e.getSource() == bplus) {
+                        if (func.getReturnq() < 20) {
+                            func.setReturnq(func.getReturnq() + 1);
+                            } 
+                            func.updateSummary();
+                            }           
+                    // Minus
+                    if (e.getSource() == bminus) {
+                        if (func.getReturnq() > 0) {
+                            func.setReturnq(func.getReturnq() - 1);
+                            }
+
+                            func.updateSummary();
+                        }
+                
+                //Clear
+                    if (e.getSource() == clear){
+                        int con = JOptionPane.showConfirmDialog(this, "Are you sure you want clear everything?", "Notice", JOptionPane.YES_NO_OPTION);
+                        if(con == 0){
+                        tfname.setText("  ");
+                        tfno.setText("  ");
+                        tfadd.setText("  ");
+                        func.clearValues();
+                        } else {
                             return;
                         }
-                        refillq--;
-                        tfrefill.setText(String.valueOf(refillq));
                     }
                     
-                //Returned
-                    if (e.getSource() == bplus){
-                        if (returnq >= 20){
-                            return;
+                //Proceed
+                    if (e.getSource() == proceed){
+                        if (func.getRefillq() == 0 && func.getRefillq() == 0 ){
+                            warn3.setForeground(Color.decode("#fa7a7f"));
                         }
-                        returnq++;
-                        tfreturn.setText(String.valueOf(returnq));
-                    }
-                    //minus
-                    if (e.getSource() == bminus){
-                        if (returnq == 0){
-                            return;
+                        if(tfname.getText().trim().isEmpty()){
+                            warn1.setForeground(Color.decode("#fa7a7f"));
                         }
-                        returnq--;
-                        tfreturn.setText(String.valueOf(returnq));
-                    }
+                        if(tfno.getText().trim().isEmpty()){
+                            warn2.setForeground(Color.decode("#fa7a7f"));
+                        }
+                        if(!tfname.getText().trim().isEmpty()){
+                            warn1.setForeground(Color.WHITE);
+                        }
+                        if(!tfno.getText().trim().isEmpty()){
+                            warn2.setForeground(Color.WHITE);   
+                        }
+                        if (func.getRefillq() != 0 && func.getRefillq() != 0 ){
+                            warn3.setForeground(Color.WHITE);
+                        }
+                        
+                        
+                        
+        }
     }
 }

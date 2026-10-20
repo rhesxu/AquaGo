@@ -71,7 +71,7 @@ public class startup extends JFrame implements ActionListener {
                 //logo
                 this.add(logo);
                 logo.setIcon(logoi);
-                logo.setBounds(520,50,500,500);
+                logo.setBounds(575,80,500,500);
             
                 //bg
                 this.add(bg);
