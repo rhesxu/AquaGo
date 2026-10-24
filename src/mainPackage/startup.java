@@ -10,7 +10,6 @@ public class startup extends JFrame implements ActionListener {
         //Labbel
         JLabel bg = new JLabel ();
         JLabel logo = new JLabel ();
-        JLabel p1 = new JLabel ();
         
         //Text
         JLabel mess1 = new JLabel ("Fresh Water. Easy Transactions.");
@@ -55,6 +54,7 @@ public class startup extends JFrame implements ActionListener {
                 staff.setFocusPainted(false);
                 staff.setFont(new Font ("SansSerif", Font.BOLD | Font.ITALIC , 17));
                 staff.setForeground(Color.decode("#0049a3"));
+                staff.addActionListener(this);
                 
                 //start
                 this.add(start);
@@ -85,9 +85,15 @@ public class startup extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
+        //ORDERING
         if(e.getSource() == start){
             new menu();
             this.dispose();
+        }
+        
+        //ADMIN
+        if (e.getSource() == staff){
+            new Verification(this);
         }
     }
 

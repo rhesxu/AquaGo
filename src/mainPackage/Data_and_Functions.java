@@ -1,62 +1,114 @@
 package mainPackage;
+import java.time.LocalDate;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+//-------------------------------------------------------------ABSTRACT CLASS--------------------------------------------------------//
+abstract class TransactionCalculator {
 
-public class Data_and_Functions {
+    //ABSTRACT METHODS
+    public abstract double calculateTotal(int refill, int missing);
 
-    //OBJECTS
+    public abstract int calculateMissing(int refill, int returned);
+
+    public abstract double calculateChange(double cash, double total);
+}
+
+//-------------------------------------------------------------MAIN CLASS--------------------------------------------------------//
+public class Data_and_Functions extends TransactionCalculator {
+        
+    //ABSTRACT METHOS IMPLEMENTATION    
+        @Override
+        public double calculateTotal(int refill, int missing) {
+        return (refill * 25.00) + (missing * 100.00);
+    }
+
+        @Override
+        public int calculateMissing(int refill, int returned) {
+        int result = refill - returned;
+
+        if (result < 0) {
+            result = 0;
+        }
+
+        return result;
+    }
+
+        @Override
+        public double calculateChange(double cash, double total) {
+        return cash - total;
+    }
+
     //VARIABLES
-    //NUMBERS
-    public Data_and_Functions() {
+        //STATIC DATA
+        public static int orderCount = 0;
+        static LocalDate date = LocalDate.now();
+        
+        //DATA HIDING
+        private int refillq = 0;
+        private int returnq = 0;
+        private double total = 0;
+        private int missing = refillq - returnq;
+
+    //ENCAPSULATION
+        //CONSTRUCTOR OVERLOADING
+        public Data_and_Functions() {
 
     }
-    private int refillq = 0;
-    private int returnq = 0;
-    private double total = 0;
-    private int missing = refillq - returnq;
-
-    public void setMissing(int missing) {
+        public Data_and_Functions(int refillq, int returnq, double total, int missing) {
+        this.refillq = refillq;
+        this.returnq = returnq;
+        this.total = total;
         this.missing = missing;
     }
 
-    public int getMissing() {
-        return missing;
+        //GETTER SETTER
+        
+        public LocalDate getDate (){
+            return date;
+    }
+        
+        public void setMissing(int missing) {
+            this.missing = missing;
     }
 
-    public int getRefillq() {
-        return refillq;
+        public int getMissing() {
+            return missing;
     }
 
-    public void setRefillq(int refillq) {
-        this.refillq = refillq;
+        public int getRefillq() {
+            return refillq;
     }
 
-    public int getReturnq() {
-        return returnq;
+        public void setRefillq(int refillq) {
+            this.refillq = refillq;
     }
 
-    public void setReturnq(int returnq) {
-        this.returnq = returnq;
+        public int getReturnq() {
+            return returnq;
     }
 
-    public double getTotal() {
-        return total;
+        public void setReturnq(int returnq) {
+            this.returnq = returnq;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+        public double getTotal() {
+            return total;
     }
 
-    public void updateSummary() {
+        public void setTotal(double total) {
+            this.total = total;
+        }
+
+    //FUNCTIONS
+        
+        //Summary update
+        public void updateSummary() {
 
         // COMPARING THE MISSING AND REFILLED CONTAINERS
-        int missing = Math.max(0, getRefillq() - getReturnq());
+        int missing = calculateMissing(getRefillq(), getReturnq());
         setMissing(missing);
-        
+
         // CALCULATIONS
-        double total = (getRefillq() * 25.00) + (getMissing() * 100.00);
+        double total = calculateTotal(getRefillq(), getMissing());
         setTotal(total);
 
         // DISPLAYING
@@ -64,12 +116,52 @@ public class Data_and_Functions {
         menu.tfreturn.setText(String.valueOf(getReturnq()));
         menu.tfest.setText(String.format("%.2f", getTotal()));
     }
-    
-    public void clearValues() {
+        
+        //Clearing
+        public void clearValues() {
         setRefillq(0);
         setReturnq(0);
         setMissing(0);
         setTotal(0.0);
         updateSummary();
+    }
+        
+        //ID Generation
+        public String generateOrderID() {
+            orderCount++;
+            return String.format("AQ-%06d", orderCount);
 }
+        
+        //PRINT RECEIPT
+        public void printReceipt(double cash, double balance,String orderID, String name, String contact, String address) {
+
+            System.out.println("==================================");
+            System.out.println("             AQUAGO               ");
+            System.out.println("          OFFICIAL RECEIPT        ");
+            System.out.println("==================================");
+            System.out.println("Order ID: " + generateOrderID());
+            System.out.println("Date: " + getDate());
+            System.out.println("Full Name: " + name);
+            System.out.println("Contact No.: " + contact);
+            if (address.trim().isEmpty()) {
+            System.out.println("Address: Not provided");
+            } else {
+            System.out.println("Address: " + address);
+            }
+            System.out.println("----------------------------------");
+            System.out.println("Water Refill: " + getRefillq());
+            System.out.println("Returned Containers: " + getReturnq());
+            System.out.println("Missing Containers: " + getMissing());
+            System.out.println("----------------------------------");
+            System.out.println("Refill Price: P25.00");
+            System.out.println("Missing Container Fee: P100.00");
+            System.out.println("----------------------------------");
+            System.out.println(String.format("Total Amount: P%.2f", getTotal()));
+            System.out.println(String.format("Cash Received: P%.2f", cash));
+            System.out.println(String.format("Change: P%.2f", balance));
+
+        System.out.println("==================================");
+        System.out.println("      THANK YOU FOR ORDERING!    ");
+        System.out.println("==================================");
+    }
 }

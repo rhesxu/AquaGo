@@ -35,11 +35,7 @@ public class menu extends JFrame implements ActionListener {
         ImageIcon bgi = new ImageIcon ("C:/AquaGo/bg.png");
         ImageIcon paneli = new ImageIcon ("C:/AquaGo/panel.png");
         ImageIcon icon = new ImageIcon ("C:/AquaGo/icon.png");
-        ImageIcon box2 = new ImageIcon ("C:/AquaGo/box2.png");
-        ImageIcon cleari = new ImageIcon ("C:/AquaGo/clearb.png");
-        ImageIcon proceedi = new ImageIcon ("C:/AquaGo/proceedb.png");
-        ImageIcon backi = new ImageIcon ("C:/AquaGo/backb.png");
-        
+        ImageIcon box2 = new ImageIcon ("C:/AquaGo/box2.png");    
         
         //Shapes
         JLabel box1 = new JLabel();
@@ -67,9 +63,9 @@ public class menu extends JFrame implements ActionListener {
         JButton rbminus = new JButton("-");
         JButton bplus = new JButton("+");
         JButton bminus = new JButton("-");
-        JButton clear = new JButton(cleari);
-        JButton proceed = new JButton(proceedi);
-        JButton back = new JButton(backi);
+        JButton clear = new JButton("Clear");
+        JButton proceed = new JButton("Proceed  →");
+        JButton back = new JButton("← Back");
         
               
     public menu(){
@@ -89,18 +85,24 @@ public class menu extends JFrame implements ActionListener {
             tfname.setBounds(85, 220, 1000, 40);
             tfname.setBackground(Color.decode("#EAF4FC"));
             tfname.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+            tfname.setFont(new Font("Arial", Font.PLAIN, 17));
+            tfname.setForeground(Color.decode("#174678"));
             
             //TF ContactNo.
             this.add(tfno);
             tfno.setBounds(85, 310, 1000, 40);
             tfno.setBackground(Color.decode("#EAF4FC"));
             tfno.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+            tfno.setFont(new Font("Arial", Font.PLAIN, 17));
+            tfno.setForeground(Color.decode("#174678"));
             
             //TF Address
             this.add(tfadd);
             tfadd.setBounds(85, 400, 1000, 40);
             tfadd.setBackground(Color.decode("#EAF4FC"));
             tfadd.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+            tfadd.setFont(new Font("Arial", Font.PLAIN, 17));
+            tfadd.setForeground(Color.decode("#174678"));
             
             //TF refill
             this.add(tfrefill);
@@ -157,7 +159,7 @@ public class menu extends JFrame implements ActionListener {
             //"Order details"
             this.add(mess1);
             mess1.setFont(new Font("Arial", Font.BOLD, 35));
-            mess1.setBounds(80, 75, 250, 80);
+            mess1.setBounds(80, 75, 300, 80);
             mess1.setForeground(Color.decode("#004170"));
             
             //"Fullname"
@@ -181,7 +183,7 @@ public class menu extends JFrame implements ActionListener {
             //"Refilled"
             this.add(mess5);
             mess5.setFont(new Font("Arial", Font.ITALIC | Font.BOLD , 16));
-            mess5.setBounds(87, 485, 200, 80);
+            mess5.setBounds(87, 485, 270, 80);
             mess5.setForeground(Color.decode("#174678"));
             
             //"Returned"
@@ -228,57 +230,75 @@ public class menu extends JFrame implements ActionListener {
         
             //REFILL
                 // Plus button
-                rbplus.setBounds(500, 547, 80, 38);
                 this.add(rbplus);
-                rbplus.setFont(new Font("Arial", Font.BOLD, 30));
-                rbplus.setBackground(Color.decode("#7ac3fa"));
-                rbplus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+                rbplus.setBounds(500, 547, 80, 39);
+                rbplus.setFont(new Font("Arial", Font.BOLD, 28));
+                rbplus.setBackground(Color.decode("#3096DE"));
+                rbplus.setForeground(Color.WHITE);
+                rbplus.setBorder(BorderFactory.createLineBorder(Color.decode("#3096DE"), 1));
+                rbplus.setFocusPainted(false);
                 rbplus.addActionListener(this);
-                rbplus.setForeground(Color.white);
 
                 // Minus button
-                rbminus.setBounds(500, 590, 80, 38);
                 this.add(rbminus);
-                rbminus.setFont(new Font("Arial", Font.BOLD, 35));
-                rbminus.setBackground(Color.decode("#7ac3fa"));
-                rbminus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+                rbminus.setBounds(500, 588, 80, 39);
+                rbminus.setFont(new Font("Arial", Font.BOLD, 28));
+                rbminus.setBackground(Color.decode("#EAF4FC"));
+                rbminus.setForeground(Color.decode("#004170"));
+                rbminus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1));
+                rbminus.setFocusPainted(false);
                 rbminus.addActionListener(this);
-                rbminus.setForeground(Color.white);
                 
             //RETURNED
                 // Plus button
-                bplus.setBounds(500, 665, 80, 38);
                 this.add(bplus);
-                bplus.setFont(new Font("Arial", Font.BOLD, 30));
-                bplus.setBackground(Color.decode("#7ac3fa"));
-                bplus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+                bplus.setBounds(500, 665, 80, 39);
+                bplus.setFont(new Font("Arial", Font.BOLD, 28));
+                bplus.setBackground(Color.decode("#3096DE"));
+                bplus.setForeground(Color.WHITE);
+                bplus.setBorder(BorderFactory.createLineBorder(Color.decode("#3096DE"), 1));
+                bplus.setFocusPainted(false);
                 bplus.addActionListener(this);
-                bplus.setForeground(Color.white);
 
                 // Minus button
-                bminus.setBounds(500, 707, 80, 38);
                 this.add(bminus);
-                bminus.setFont(new Font("Arial", Font.BOLD, 35));
-                bminus.setBackground(Color.decode("#7ac3fa"));
-                bminus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1, true));
+                bminus.setBounds(500, 706, 80, 39);
+                bminus.setFont(new Font("Arial", Font.BOLD, 28));
+                bminus.setBackground(Color.decode("#EAF4FC"));
+                bminus.setForeground(Color.decode("#004170"));
+                bminus.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1));
+                bminus.setFocusPainted(false);
                 bminus.addActionListener(this);
-                bminus.setForeground(Color.white);
                 
             //CLEARING
                 this.add(clear);
-                clear.setBounds(1160,600,358,70);
-                clear.setOpaque(false);
-                clear.setBorder(null);
+                clear.setBounds(1160, 600, 358, 70);
+                clear.setFont(new Font("Arial", Font.BOLD, 21));
+                clear.setBackground(Color.decode("#EAF4FC"));
+                clear.setForeground(Color.decode("#174678"));
+                clear.setBorder(BorderFactory.createLineBorder(Color.decode("#B5D4ED"), 2));
                 clear.setFocusPainted(false);
                 clear.addActionListener(this);
 
             //PROCEED
                 this.add(proceed);
-                proceed.setBounds(1160,680,358,93);
+                proceed.setBounds(1160, 682, 358, 80);
+                proceed.setFont(new Font("Arial", Font.BOLD, 22));
                 proceed.setBackground(Color.decode("#3096DE"));
-                proceed.setBorder(null);
+                proceed.setForeground(Color.WHITE);
+                proceed.setBorder(BorderFactory.createLineBorder(Color.decode("#3096DE"), 1));
+                proceed.setFocusPainted(false);
                 proceed.addActionListener(this);
-                
+            
+            //BACK BUTTON
+                this.add(back);
+                back.setBounds(935, 100, 150, 40);
+                back.setFont(new Font("Arial", Font.BOLD, 15));
+                back.setBackground(Color.decode("#EAF4FC"));
+                back.setForeground(Color.decode("#174678"));
+                back.setBorder(BorderFactory.createLineBorder(Color.decode("#D5E7F7"), 1));
+                back.setFocusPainted(false);
+                back.addActionListener(this);
             
         //SHAPE
             //Line 1
@@ -341,19 +361,28 @@ public class menu extends JFrame implements ActionListener {
                     //plus
                     if (e.getSource() == rbplus){
                         if (func.getRefillq() < 20) {
-                        func.setRefillq(func.getRefillq() + 1);
-                        func.setReturnq(func.getReturnq() + 1);
+                            func.setRefillq(func.getRefillq() + 1);
+                            func.setReturnq(func.getReturnq() + 1);
                             }
-                        func.updateSummary();
+                            func.updateSummary();
                     }
                     //minus
-                    if (e.getSource() == rbminus){
+                    //REFILLED MINUS
+                    if (e.getSource() == rbminus) {
                         if (func.getRefillq() > 0) {
+
+                        //IF BOTH QUANTITIES ARE EQUAL
+                        if (func.getRefillq() == func.getReturnq()) {
                         func.setRefillq(func.getRefillq() - 1);
                         func.setReturnq(func.getReturnq() - 1);
-                            }
-                        func.updateSummary();
+
+                        } else {
+                        //DECREASE REFILLED ONLY
+                        func.setRefillq(func.getRefillq() - 1);
                         }
+                     }
+                        func.updateSummary();
+                    }
                          
                 //Returned
                     // Plus
@@ -374,6 +403,8 @@ public class menu extends JFrame implements ActionListener {
                 
                 //Clear
                     if (e.getSource() == clear){
+                        if(func.getRefillq() != 0 || func.getReturnq() != 0 || !tfname.getText().trim().isEmpty()
+                                || !tfno.getText().trim().isEmpty()){
                         int con = JOptionPane.showConfirmDialog(this, "Are you sure you want clear everything?", "Notice", JOptionPane.YES_NO_OPTION);
                         if(con == 0){
                         tfname.setText("  ");
@@ -382,32 +413,61 @@ public class menu extends JFrame implements ActionListener {
                         func.clearValues();
                         } else {
                             return;
+                            }
                         }
                     }
                     
                 //Proceed
-                    if (e.getSource() == proceed){
-                        if (func.getRefillq() == 0 && func.getRefillq() == 0 ){
-                            warn3.setForeground(Color.decode("#fa7a7f"));
-                        }
-                        if(tfname.getText().trim().isEmpty()){
-                            warn1.setForeground(Color.decode("#fa7a7f"));
-                        }
-                        if(tfno.getText().trim().isEmpty()){
+                    if (e.getSource() == proceed) {
+
+                    //CHECK REFILL
+                    if (func.getRefillq() == 0) {
+                        warn3.setForeground(Color.decode("#fa7a7f"));
+                       } else {
+                         warn3.setForeground(Color.WHITE);
+                       }
+
+                    //CHECK NAME
+                    if (tfname.getText().trim().isEmpty()) {
+                         warn1.setForeground(Color.decode("#fa7a7f"));
+                       } else {
+                        warn1.setForeground(Color.WHITE);
+                       }
+
+                    //CHECK IF THE NUMBER IS VALID
+                     if (tfno.getText().trim().isEmpty()) {
+                        warn2.setText("*This field can't be empty.");
+                        warn2.setForeground(Color.decode("#fa7a7f"));
+                       } else if (!tfno.getText().trim().matches("[0-9]{11}")){
+                            warn2.setText("                *Invalid Number");
                             warn2.setForeground(Color.decode("#fa7a7f"));
-                        }
-                        if(!tfname.getText().trim().isEmpty()){
-                            warn1.setForeground(Color.WHITE);
-                        }
-                        if(!tfno.getText().trim().isEmpty()){
-                            warn2.setForeground(Color.WHITE);   
-                        }
-                        if (func.getRefillq() != 0 && func.getRefillq() != 0 ){
-                            warn3.setForeground(Color.WHITE);
-                        }
-                        
-                        
-                        
-        }
+                        } else {
+                        warn2.setForeground(Color.WHITE);
+                        } 
+
+                    //STOP IF ANY FIELD IS INVALID
+                    if (func.getRefillq() == 0 || tfname.getText().trim().isEmpty()|| tfno.getText().trim().isEmpty() || !tfno.getText().trim().matches("[0-9]{11}")) {
+                    return;
+                    }
+
+                    //UPDATE AND PASS VALUES
+                    if (tfadd.getText().trim().isEmpty()){
+                        func.updateSummary();
+                        new Payment(func, tfname.getText().trim(), tfno.getText().trim(), tfadd.getText().trim());
+                        dispose();
+                    } else {
+                        func.updateSummary();
+                        new Payment(func, tfname.getText().trim(), tfno.getText().trim());
+                        dispose();
+                    }
+                  }
+                  
+                   if (e.getSource() == back){
+                       dispose();
+                       new startup();
+                   }
     }
+
 }
+
+
