@@ -136,24 +136,14 @@ public class Transactions extends Admin implements ActionListener, KeyListener {
         mainpanel.add(tablepanel);
 
         //TABLE MODEL
-        String[] columns = {
-            "Date",
-            "Customer Name",
-            "Contact No.",
-            "Address",
-            "Refilled",
-            "Returned",
-            "Price"
-        };
+        String[] columns = {"Date", "Customer Name", "Contact No.", "Address", "Refilled", "Returned", "Price", "Order ID"};
 
         model = new DefaultTableModel(columns, 0);
-
-        //SAMPLE DATA
-        records.add(new Object[]{"2026-10-21", "Juan Dela Cruz", "09171234567", "Bustos, Bulacan", 8, 6, "₱400.00"});
-        records.add(new Object[]{"2026-10-20", "Maria Santos", "09181234567", "Baliwag, Bulacan", 5, 5, "₱125.00"});
-        records.add(new Object[]{"2026-10-19", "Pedro Reyes", "09191234567", "Not provided", 10, 8, "₱450.00"});
-        records.add(new Object[]{"2026-10-18", "Ana Cruz", "09201234567", "San Rafael, Bulacan", 3, 3, "₱75.00"});
-        records.add(new Object[]{"2026-10-17", "Liza Garcia", "09211234567", "Plaridel, Bulacan", 7, 6, "₱275.00"});
+        
+        
+        //LOAD TRANSACTIONS FROM FILE
+        records.clear();
+        records.addAll(AquagoLoadSave.loadTransactions());
 
         //DATE DROPDOWNS (DATES FROM TRANSACTION RECORDS)
         tffrom.addItem("Any date");
@@ -190,7 +180,12 @@ public class Transactions extends Admin implements ActionListener, KeyListener {
         table.getColumnModel().getColumn(4).setPreferredWidth(70);   //Refilled
         table.getColumnModel().getColumn(5).setPreferredWidth(70);   //Returned
         table.getColumnModel().getColumn(6).setPreferredWidth(100);  //Price
-
+        table.getColumnModel().getColumn(7).setPreferredWidth(115); //id
+        
+        //SWAP ORDER ID AND DATE COLUMN IN DISPLAY
+        table.moveColumn(7, 0); //MOVE ORDER ID TO FIRST
+        table.moveColumn(1, 7); //MOVE DATE TO LAST
+        
         //SHOW ALL TRANSACTIONS WHEN PAGE OPENS
         applyFilters();
 

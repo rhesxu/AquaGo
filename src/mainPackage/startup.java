@@ -25,7 +25,7 @@ public class startup extends JFrame implements ActionListener {
         
     public startup(){       
         //FRAME SETUP
-        setTitle("AquaGo");
+        setTitle(Settings.businessName);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         setResizable(false);

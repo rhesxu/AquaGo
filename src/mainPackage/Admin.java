@@ -44,7 +44,7 @@ public class Admin extends JFrame implements ActionListener {
 
         //FRAME SETUP
         this.setIconImage(icon.getImage());
-        setTitle("AquaGo (Admin)");
+        setTitle(Settings.businessName + " (Admin)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(1000, 600));
@@ -188,7 +188,7 @@ public class Admin extends JFrame implements ActionListener {
             settings.setBackground(buttonColor);
             rightPanel.removeAll();
             rightPanel.add(TRPanel, BorderLayout.NORTH);
-            Admin page = new Remitance();
+            Admin page = new Sales_Record();
             rightPanel.add(page.getPanel(), BorderLayout.CENTER);
             rightPanel.revalidate();
             rightPanel.repaint();

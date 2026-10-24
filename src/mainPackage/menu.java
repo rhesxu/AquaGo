@@ -19,8 +19,8 @@ public class menu extends JFrame implements ActionListener {
         JLabel mess5 = new JLabel ("No. of containers refilled");
         JLabel mess6 = new JLabel ("No. of empty containers returned");
         JLabel mess7 = new JLabel ("Estimated Price");
-        JLabel mess8 = new JLabel ("₱25 per Refill");
-        JLabel mess9 = new JLabel ("₱100 per Missing Containers");
+        JLabel mess8 = new JLabel(String.format("₱%.2f per Refill", Settings.refillPrice));
+        JLabel mess9 = new JLabel(String.format("₱%.2f per Missing Container", Settings.missingFee));
         JLabel mess10 = new JLabel ("Fresh Water. Easy Transactions.");
         JLabel mess11 = new JLabel ("Order with Ease.");
         JLabel warn1 = new JLabel ("*This field can't be empty");
@@ -453,11 +453,11 @@ public class menu extends JFrame implements ActionListener {
                     //UPDATE AND PASS VALUES
                     if (tfadd.getText().trim().isEmpty()){
                         func.updateSummary();
-                        new Payment(func, tfname.getText().trim(), tfno.getText().trim(), tfadd.getText().trim());
+                        new Payment(func, tfname.getText().trim(), tfno.getText().trim());
                         dispose();
                     } else {
                         func.updateSummary();
-                        new Payment(func, tfname.getText().trim(), tfno.getText().trim());
+                        new Payment(func, tfname.getText().trim(), tfno.getText().trim(), tfadd.getText().trim());
                         dispose();
                     }
                   }

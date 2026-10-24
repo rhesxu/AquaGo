@@ -6,11 +6,22 @@ import java.awt.event.*;
 
 public class Settings extends Admin implements ActionListener {
 
-    //VARIABLES (TEMPORARY SETTINGS - NO DATABASE YET)
+    //VARIABLES
     static String businessName = "AquaGo Water Refilling";
     static double refillPrice = 25.00;
     static double missingFee = 100.00;
     static boolean confirmation = true;
+    
+    
+    //LOAD SAVED PRICES ON STARTUP
+    static {
+        double[] prices = AquagoLoadSave.loadPrices();
+        refillPrice = prices[0];
+        missingFee = prices[1];
+    }
+
+    //ADMIN PASSWORD
+    static String adminPassword = AquagoLoadSave.loadAdminPassword();
 
     //TEXTFIELDS
     JTextField tfbusiness = new JTextField();
@@ -242,10 +253,11 @@ public class Settings extends Admin implements ActionListener {
             refillPrice = refill;
             missingFee = missing;
             confirmation = checkconfirm.isSelected();
+            
+            //SAVE PRICES TO TEXT FILE
+            AquagoLoadSave.savePrices(refillPrice, missingFee);
 
-            JOptionPane.showMessageDialog(null,
-                    "Settings saved for this session.\nNot yet connected to transactions or file storage.",
-                    "Settings", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Settings updated!");
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please enter valid numbers for prices.");
@@ -274,12 +286,24 @@ public class Settings extends Admin implements ActionListener {
             return;
         }
 
-        //CONNECT TO YOUR ADMIN LOGIN / ACCOUNT STORAGE LATER
-        //DO NOT CLAIM PASSWORD WAS CHANGED UNTIL THE CURRENT PASSWORD IS VERIFIED AND SAVED
-        JOptionPane.showMessageDialog(null,
-                "Password fields are valid, but changing the admin password is not connected yet.\n"
-                + "Connect this button to your admin login/account storage first.",
-                "Admin Password", JOptionPane.INFORMATION_MESSAGE);
+        
+        //CHECK CURRENT PASSWORD
+        if (!String.valueOf(current).equals(adminPassword)) {
+            JOptionPane.showMessageDialog(this, "Incorrect current password.");
+            return;
+        }
+
+        //SAVE NEW PASSWORD
+        adminPassword = String.valueOf(newpass);
+        AquagoLoadSave.saveAdminPassword(adminPassword);
+
+        JOptionPane.showMessageDialog(this,
+                "Admin password changed successfully!");
+
+        tfcurrent.setText("");
+        tfnew.setText("");
+        tfconfirm.setText("");
+
     }
 
 }

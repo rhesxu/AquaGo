@@ -34,11 +34,12 @@ public class Verification extends JFrame implements ActionListener{
     
     //Main Constructor======================================================================================================
     public Verification (startup st) {
+        super("Admin Access");
+
         //SETTING PARA MAALALA UNG STARTUP FRAME
         this.st = st;
-        
-        //FRAME SETUP
-        super("Admin Access");
+
+    //FRAME SETUP
         setSize(800,600);
         setLocationRelativeTo(null);
         setLayout(null);
@@ -131,24 +132,32 @@ public class Verification extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
-            //PROCEED
-            if (e.getSource()==b1){
-                if (pf1.getText().isEmpty()){
-                    warn1.setText("*Fields can't be Empty.");
-                    warn1.setForeground(Color.decode("#fa7a7f"));
-                } else {
-                    warn1.setForeground(Color.WHITE);
-                }
-                
-//                if (pf1.getText().isEqual()){
-//                    warn1.setText("*Wrong Password");
-//                    warn1.setForeground(Color.decode("#fa7a7f"));
-//                } else {
-//                    warn1.setForeground(Color.WHITE);
-                new Admin();
-                dispose();
-                st.dispose();
+            
+        
+        //PROCEED
+        if (e.getSource() == b1) {
+
+            String password = new String(pf1.getPassword());
+
+            if (password.trim().isEmpty()) {
+                warn1.setText("*Fields can't be empty.");
+                warn1.setForeground(Color.decode("#fa7a7f"));
+                return;
             }
+
+            if (!password.equals(Settings.adminPassword)) {
+                warn1.setText("*Wrong password.");
+                warn1.setForeground(Color.decode("#fa7a7f"));
+                return;
+            }
+
+            //CORRECT PASSWORD
+            new Admin();
+            dispose();
+            st.dispose();
+        }
+
+
             
             //SHOWPASS
             if (e.getSource() == sp) {

@@ -1,8 +1,10 @@
 package mainPackage;
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
-public class Remitance extends Admin {
+
+public class Sales_Record extends Admin {
 
     //BUSINESS SUMMARY
     @Override
@@ -178,12 +180,136 @@ public class Remitance extends Admin {
         recordsList.setLayout(new BoxLayout(recordsList, BoxLayout.Y_AXIS));
         recordsList.setBackground(Color.WHITE);
 
-        JLabel empty = new JLabel("No profit records yet.");
-        empty.setAlignmentX(Component.CENTER_ALIGNMENT);
-        empty.setForeground(muted);
-        empty.setFont(new Font("Arial", Font.PLAIN, 15));
-        recordsList.add(Box.createVerticalStrut(50));
-        recordsList.add(empty);
+        
+        //--------------------LOAD SAVED TRANSACTIONS--------------------
+        ArrayList<Object[]> transactions = AquagoLoadSave.loadTransactions();
+        HashMap<String, double[]> dailyRecords = new HashMap<>();
+
+        double todayProfit = 0;
+        double monthProfit = 0;
+        int totalReturned = 0;
+
+        String today = java.time.LocalDate.now().toString();
+        String month = java.time.YearMonth.now().toString();
+
+        for (Object[] record : transactions) {
+
+            String date = record[0].toString();
+            double price = Double.parseDouble(record[6].toString()
+                    .replace("₱", "").replace(",", "").trim());
+            int returned = Integer.parseInt(record[5].toString());
+
+            //TODAY'S SALES
+            if (date.equals(today)) {
+                todayProfit += price;
+            }
+
+            //MONTHLY SALES
+            if (date.startsWith(month)) {
+                monthProfit += price;
+            }
+
+            totalReturned += returned;
+
+            //GROUP TRANSACTIONS BY DATE
+            double[] daily = dailyRecords.get(date);
+
+            if (daily == null) {
+                daily = new double[]{0, 0};
+                dailyRecords.put(date, daily);
+            }
+
+            daily[0]++;
+            daily[1] += price;
+        }
+
+        //DISPLAY SUMMARY
+        todayAmount.setText(String.format("₱%.2f", todayProfit));
+        monthAmount.setText(String.format("₱%.2f", monthProfit));
+        containerAmount.setText(String.valueOf(totalReturned));
+        
+        //--------------------DISPLAY AND SORT RECORD PANELS--------------------
+        Runnable refreshRecords = () -> {
+
+            recordsList.removeAll();
+
+            ArrayList<Map.Entry<String, double[]>> dailyList =
+                    new ArrayList<>(dailyRecords.entrySet());
+
+            String selectedSort = sorting.getSelectedItem().toString();
+
+            dailyList.sort((a, b) -> {
+                if (selectedSort.equals("Newest first")) {
+                    return b.getKey().compareTo(a.getKey());
+                }
+
+                if (selectedSort.equals("Oldest first")) {
+                    return a.getKey().compareTo(b.getKey());
+                }
+
+                if (selectedSort.equals("Highest profit")) {
+                    return Double.compare(b.getValue()[1], a.getValue()[1]);
+                }
+
+                return Double.compare(a.getValue()[1], b.getValue()[1]);
+            });
+
+            if (dailyList.isEmpty()) {
+
+                JLabel empty = new JLabel("No sales records yet.");
+                empty.setAlignmentX(Component.CENTER_ALIGNMENT);
+                empty.setForeground(muted);
+                empty.setFont(new Font("Arial", Font.PLAIN, 15));
+
+                recordsList.add(Box.createVerticalStrut(50));
+                recordsList.add(empty);
+
+            } else {
+
+                for (Map.Entry<String, double[]> entry : dailyList) {
+
+                    JPanel row = new JPanel(null);
+                    row.setPreferredSize(new Dimension(1032, 48));
+                    row.setMinimumSize(new Dimension(1032, 48));
+                    row.setMaximumSize(new Dimension(1032, 48));
+                    row.setBackground(Color.WHITE);
+                    row.setBorder(BorderFactory.createMatteBorder(
+                            0, 0, 1, 0, linecolor));
+
+                    //DATE
+                    JLabel dateLabel = new JLabel(entry.getKey());
+                    dateLabel.setBounds(20, 8, 390, 30);
+                    dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+                    dateLabel.setForeground(navy);
+                    row.add(dateLabel);
+
+                    //TRANSACTION COUNT
+                    JLabel countLabel = new JLabel(
+                            String.valueOf((int) entry.getValue()[0]));
+                    countLabel.setBounds(500, 8, 185, 30);
+                    countLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+                    countLabel.setForeground(navy);
+                    row.add(countLabel);
+
+                    //COMBINED SALES
+                    JLabel profitLabel = new JLabel(
+                            String.format("₱%.2f", entry.getValue()[1]));
+                    profitLabel.setBounds(820, 8, 190, 30);
+                    profitLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                    profitLabel.setForeground(blue);
+                    row.add(profitLabel);
+
+                    recordsList.add(row);
+                }
+            }
+
+            recordsList.revalidate();
+            recordsList.repaint();
+        };
+
+        refreshRecords.run();
+        sorting.addActionListener(e -> refreshRecords.run());
+
 
         JScrollPane recordsScroll = new JScrollPane(recordsList);
         recordsScroll.setVerticalScrollBarPolicy(

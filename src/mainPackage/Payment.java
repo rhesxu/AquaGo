@@ -17,7 +17,7 @@ public class Payment extends JFrame implements ActionListener, KeyListener {
 
     //TEXTS
     JLabel title = new JLabel("Receipt Preview");
-    JLabel brand = new JLabel("AquaGo");
+    JLabel brand = new JLabel(Settings.businessName);
     JLabel summary = new JLabel("Purchase Summary");
 
     //CUSTOMER DETAILS
@@ -326,9 +326,9 @@ public class Payment extends JFrame implements ActionListener, KeyListener {
         }
 
         //DISPLAY RECEIPT
-        refill.setText("Water Refill (25): " + data.getRefillq());
+        refill.setText(String.format("Water Refill (₱%.2f): %d",Settings.refillPrice, data.getRefillq()));
         returned.setText("Returned Containers: " + data.getReturnq());
-        missing.setText("Missing Containers (₱100): " + data.getMissing());
+        missing.setText(String.format("Missing Containers (₱%.2f): %d",Settings.missingFee, data.getMissing()));
         total.setText(String.format("Total Amount: ₱%.2f", data.getTotal()));
         amount.setText(String.format("₱%.2f", data.getTotal()));
 
@@ -398,7 +398,9 @@ public class Payment extends JFrame implements ActionListener, KeyListener {
 
                 //PAYMENT SUCCESSFUL
                 bal = cash - data.getTotal();
-
+                
+                //SAVE TRANSACTION TO FILE
+                AquagoLoadSave.saveTransaction(orderID, cName, cContact, cAdd,data.getRefillq(), data.getReturnq(), data.getTotal());
                 JOptionPane.showMessageDialog(this,
                         String.format("Payment Successful!\nChange: ₱%.2f", bal),
                         "AquaGo", JOptionPane.INFORMATION_MESSAGE);

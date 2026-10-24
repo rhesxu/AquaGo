@@ -18,8 +18,8 @@ public class Data_and_Functions extends TransactionCalculator {
     //ABSTRACT METHOS IMPLEMENTATION    
         @Override
         public double calculateTotal(int refill, int missing) {
-        return (refill * 25.00) + (missing * 100.00);
-    }
+            return (refill * Settings.refillPrice) + (missing * Settings.missingFee);
+        }
 
         @Override
         public int calculateMissing(int refill, int returned) {
@@ -39,7 +39,7 @@ public class Data_and_Functions extends TransactionCalculator {
 
     //VARIABLES
         //STATIC DATA
-        public static int orderCount = 0;
+        public static int orderCount = AquagoLoadSave.loadOrderCount();
         static LocalDate date = LocalDate.now();
         
         //DATA HIDING
@@ -129,6 +129,7 @@ public class Data_and_Functions extends TransactionCalculator {
         //ID Generation
         public String generateOrderID() {
             orderCount++;
+            AquagoLoadSave.saveOrderCount(orderCount);
             return String.format("AQ-%06d", orderCount);
 }
         
@@ -139,7 +140,7 @@ public class Data_and_Functions extends TransactionCalculator {
             System.out.println("             AQUAGO               ");
             System.out.println("          OFFICIAL RECEIPT        ");
             System.out.println("==================================");
-            System.out.println("Order ID: " + generateOrderID());
+            System.out.println("Order ID: " + orderID);
             System.out.println("Date: " + getDate());
             System.out.println("Full Name: " + name);
             System.out.println("Contact No.: " + contact);
@@ -153,8 +154,8 @@ public class Data_and_Functions extends TransactionCalculator {
             System.out.println("Returned Containers: " + getReturnq());
             System.out.println("Missing Containers: " + getMissing());
             System.out.println("----------------------------------");
-            System.out.println("Refill Price: P25.00");
-            System.out.println("Missing Container Fee: P100.00");
+            System.out.println(String.format("Refill Price: P%.2f", Settings.refillPrice));
+            System.out.println(String.format("Missing Container Fee: P%.2f", Settings.missingFee));
             System.out.println("----------------------------------");
             System.out.println(String.format("Total Amount: P%.2f", getTotal()));
             System.out.println(String.format("Cash Received: P%.2f", cash));
