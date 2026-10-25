@@ -12,4 +12,4 @@ A java application made specifically for water refilling station develop in NetB
 - Java
 - Netbeans IDE
 ### Current Project Status
-Currently Under Development.
+Almost Done
