@@ -5,7 +5,31 @@ import java.util.*;
 
 
 public class Sales_Record extends Admin {
+    
+    //CONTAINER INVENTORY
+    int initialContainers = 50;
 
+    //CONTAINER INVENTORY
+    public int calculateAvailableContainers() {
+
+        int containerBalance = initialContainers;
+
+        ArrayList<Object[]> transactions
+                = AquagoLoadSave.loadTransactions();
+
+        for (int i = 0; i < transactions.size(); i++) {
+
+            Object[] record = transactions.get(i);
+
+            int refilled = (Integer) record[4];
+            int returned = (Integer) record[5];
+
+            containerBalance += returned - refilled;
+        }
+
+        return containerBalance;
+    }
+    
     //BUSINESS SUMMARY
     @Override
     public JPanel getPanel() {
@@ -187,7 +211,6 @@ public class Sales_Record extends Admin {
 
         double todayProfit = 0;
         double monthProfit = 0;
-        int totalReturned = 0;
 
         String today = java.time.LocalDate.now().toString();
         String month = java.time.YearMonth.now().toString();
@@ -197,7 +220,6 @@ public class Sales_Record extends Admin {
             String date = record[0].toString();
             double price = Double.parseDouble(record[6].toString()
                     .replace("₱", "").replace(",", "").trim());
-            int returned = Integer.parseInt(record[5].toString());
 
             //TODAY'S SALES
             if (date.equals(today)) {
@@ -209,7 +231,6 @@ public class Sales_Record extends Admin {
                 monthProfit += price;
             }
 
-            totalReturned += returned;
 
             //GROUP TRANSACTIONS BY DATE
             double[] daily = dailyRecords.get(date);
@@ -226,7 +247,7 @@ public class Sales_Record extends Admin {
         //DISPLAY SUMMARY
         todayAmount.setText(String.format("₱%.2f", todayProfit));
         monthAmount.setText(String.format("₱%.2f", monthProfit));
-        containerAmount.setText(String.valueOf(totalReturned));
+        containerAmount.setText(String.valueOf(calculateAvailableContainers()));
         
         //--------------------DISPLAY AND SORT RECORD PANELS--------------------
         Runnable refreshRecords = () -> {

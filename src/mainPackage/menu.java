@@ -77,6 +77,10 @@ public class menu extends JFrame implements ActionListener {
         setLayout(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //RESET QUANTITY DISPLAY FOR NEW ORDER
+        tfrefill.setText("0");
+        tfreturn.setText("0");
+        tfest.setText("00.0");
         
         
         //TEXTS FIELDS
@@ -365,8 +369,14 @@ public class menu extends JFrame implements ActionListener {
                             func.setRefillq(func.getRefillq() + 1);
                             func.setReturnq(func.getReturnq() + 1);
                             }
-                            func.updateSummary();
-                    }
+
+                        func.updateSummary();
+
+                        //REMOVE WARNING IF ORDER IS VALID
+                        if (func.getRefillq() > 0) {
+                            warn3.setForeground(Color.WHITE);
+                        }
+                }
                     //minus
                     //REFILLED MINUS
                     if (e.getSource() == rbminus) {
