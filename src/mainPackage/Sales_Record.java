@@ -21,7 +21,7 @@ public class Sales_Record extends Admin {
         Color muted = Color.decode("#7694AE");
 
         //--------------------Title--------------------
-        JLabel title = new JLabel("Business Summary");
+        JLabel title = new JLabel("Sales Record");
         title.setBounds(35, 47, 500, 48);
         title.setFont(new Font("Arial", Font.BOLD, 33));
         title.setForeground(navy);

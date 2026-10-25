@@ -20,6 +20,7 @@ public class Transactions extends Admin implements ActionListener, KeyListener {
 
     JTable table;
     DefaultTableModel model;
+    
     //STORES ALL RECORDS EVEN WHEN TABLE IS FILTERED
     ArrayList<Object[]> records = new ArrayList<>();
 

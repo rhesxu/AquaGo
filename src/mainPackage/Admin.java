@@ -25,7 +25,7 @@ public class Admin extends JFrame implements ActionListener {
 
     //BUTTONS
     JButton transactions = new JButton("Transactions");
-    JButton remitance = new JButton("Remitance");
+    JButton remitance = new JButton("Sales Record");
     JButton settings = new JButton("Settings");
     JButton logout = new JButton("Logout");
 
