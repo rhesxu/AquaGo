@@ -151,8 +151,12 @@ public class Transactions extends Admin implements ActionListener, KeyListener {
 
         for (int i = 0; i < records.size(); i++) {
             String date = records.get(i)[0].toString();
-            tffrom.addItem(date);
-            tfto.addItem(date);
+            
+            //PREVENT DUPLICATE DATES
+            if (((javax.swing.DefaultComboBoxModel<String>) tffrom.getModel()).getIndexOf(date) == -1) {
+                tffrom.addItem(date);
+                tfto.addItem(date);
+            }
         }
 
         //TABLE

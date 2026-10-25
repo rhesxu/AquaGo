@@ -57,7 +57,10 @@ public class menu extends JFrame implements ActionListener {
         
         //IMAGE IMPORT
         JLabel logo = new JLabel(logoi);
-
+        
+        //CUSTOMER SUGGESTIONS
+        JPopupMenu suggestions = new JPopupMenu();
+        
         //BUTTONS
         JButton rbplus = new JButton("+");
         JButton rbminus = new JButton("-");
@@ -88,6 +91,14 @@ public class menu extends JFrame implements ActionListener {
             tfname.setFont(new Font("Arial", Font.PLAIN, 17));
             tfname.setForeground(Color.decode("#174678"));
             
+            //NAME AUTOCOMPLETE
+            tfname.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchCustomer();
+                }
+            });
+                  
             //TF ContactNo.
             this.add(tfno);
             tfno.setBounds(85, 310, 1000, 40);
@@ -350,9 +361,10 @@ public class menu extends JFrame implements ActionListener {
     public static void main(String[] args) {
         new menu();
     }
-
-    //BUTTON FUNCTIONS
     
+    
+    
+    //BUTTON FUNCTIONS
     @Override
     public void actionPerformed(ActionEvent e) {
         
@@ -467,6 +479,88 @@ public class menu extends JFrame implements ActionListener {
                        new startup();
                    }
     }
+    
+    
+    //SEARCH CUSTOMER NAME SUGGESTIONS
+    public void searchCustomer() {
+
+        String name = tfname.getText().trim();
+
+        suggestions.setVisible(false);
+        suggestions.removeAll();
+
+        if (name.length() < 2) {
+            return;
+        }
+
+        //LOAD SAVED TRANSACTIONS
+        java.util.ArrayList<Object[]> records =
+                AquagoLoadSave.loadTransactions();
+
+        //LINEAR SEARCH
+        for (int i = records.size() - 1; i >= 0; i--) {
+
+            Object[] record = records.get(i);
+
+            String savedName = record[1].toString();
+
+            if (savedName.toLowerCase().startsWith(name.toLowerCase())) {
+
+                //PREVENT DUPLICATE NAMES IN POPUP
+                boolean exists = false;
+
+                for (int j = 0; j < suggestions.getComponentCount(); j++) {
+                    JMenuItem item = (JMenuItem) suggestions.getComponent(j);
+
+                    if (item.getText().equalsIgnoreCase(savedName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (exists) {
+                    continue;
+                }
+
+                JMenuItem item = new JMenuItem(savedName);
+
+                item.setFont(new Font("Arial", Font.PLAIN, 16));
+                item.setBackground(Color.WHITE);
+                item.setForeground(Color.decode("#174678"));
+
+                item.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+
+                        tfname.setText(savedName);
+                        
+                        //AUTO-FILL CONTACT NUMBER
+                        tfno.setText(record[2].toString());
+
+                        //CUSTOMER MUST ENTER THEIR OWN CONTACT NUMBER
+                        tfno.requestFocusInWindow();
+                    }
+                });
+
+                suggestions.add(item);
+
+                //SHOW UP TO 5 SUGGESTIONS
+                if (suggestions.getComponentCount() == 5) {
+                    break;
+                }
+            }
+        }
+
+        //DISPLAY POPUP BELOW NAME FIELD
+        if (suggestions.getComponentCount() > 0) {
+
+            suggestions.setPreferredSize(
+                    new Dimension(tfname.getWidth(),
+                            suggestions.getComponentCount() * 35));
+
+            suggestions.show(tfname, 0, tfname.getHeight());
+        }
+    }
+
 
 }
 
